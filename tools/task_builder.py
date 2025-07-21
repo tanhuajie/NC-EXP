@@ -22,7 +22,7 @@ from rlbench.backend.exceptions import *
 from rlbench.observation_config import ObservationConfig, CameraConfig
 from rlbench.backend.robot import Robot
 from rlbench.utils import name_to_task_class
-from task_validator import task_smoke, TaskValidationError
+from tools.task_validator import task_smoke, TaskValidationError
 import shutil
 
 CURRENT_DIR = dirname(abspath(__file__))
@@ -298,7 +298,7 @@ if __name__ == '__main__':
     loaded_task.new_task()
 
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        # os.system('cls' if os.name == 'nt' else 'clear')
         print('\n-----------------\n')
         print('The python file will be reloaded when simulation is restarted.')
         print('(q) to quit.')
