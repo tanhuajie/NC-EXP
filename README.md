@@ -1,6 +1,6 @@
 # 0725南昌具身智能培训教程--仿真篇
 
-本教程基于Rlbench和V-Rep, 从零开始学习具身智能的仿真环境下的任务设计--任务验证--数据采集--模型训练完整流程.
+本教程基于Rlbench和V-Rep, 学习仿真环境下的具身智能任务设计--任务验证--数据采集--模型训练完整流程.
 
 ## 第零章: 配置环境
 
@@ -476,3 +476,81 @@ return len(self.bin_objects_not_done) > 0
 
 ### 4 通过任务验证器
 完成场景和Python文件后，请循环测试多个变体以确保任务行为符合预期。若出现异常，可调整路径点高度等参数。对于包含20个相似变体的任务，通常验证3个变体即可通过验证器。
+
+
+## 第三章: 仿真任务数据采集与训练
+
+### 1. 验证所设计的任务是否合格
+
+```bash 
+# 以slide_block_to_target为例
+python -m tools.task_validator slide_block_to_target.py
+```
+
+*如果出现以下提示: Validation successful! 说明任务设计合理*
+
+<img src="assets/val.png">
+
+
+### 2. 批量化采集任务数据
+
+#### 单任务批量采集
+```bash
+python -m rlbench.dataset_generator \
+    --tasks slide_block_to_target \
+    --episodes_per_task 4 \
+    --variations 2 \
+    --processes 4 \
+    --save_path ./data_save/
+```
+
+#### 多任务批量采集
+如果要同时生成多个任务的数据，用空格分隔任务名：
+```bash
+python -m rlbench.dataset_generator \
+    --tasks slide_block_to_target pick_and_lift open_door \
+    --episodes_per_task 4 \
+    --variations 2 \
+    --processes 4 \
+    --save_path ./data_save/
+```
+
+**参数说明**
+| 参数 | 值 | 作用 |
+|------|----|------|
+| `--tasks` | `slide_block_to_target` | 指定要生成数据的任务名称（这里是 `slide_block_to_target`，即“推滑块”任务）。 |
+| `--episodes_per_task` | `4` | 每个任务变体（variation）采集的 **episode（轨迹）数量**。每个 episode 是一次完整的任务执行过程。 |
+| `--variations` | `2` | 任务的 **变体数量**。RLBench 中许多任务有不同变体（如物体位置、颜色等随机变化）。 |
+| `--processes` | `4` | 使用的 **并行进程数**，加速数据采集（多线程/多进程）。 |
+| `--save_path` | `./data_save/` | 生成数据的保存路径（目录会自动创建）。 |
+
+
+*如果有其他参数需要配置，可以运行以下命令查看帮助：*
+```bash
+python -m rlbench.dataset_generator --help
+```
+
+### 生成的数据内容
+保存的每条轨迹数据包括：
+- **观测数据**（如 RGB 图像、深度图、关节状态等）。
+- **动作数据**（机器人的动作指令）。
+- **任务元信息**（变体 ID、任务描述等）。
+
+
+<img src="assets/data_save.png">
+
+
+### 所采集的前视角图像示例:
+
+RGB图:
+<img src="assets/d1.png">
+
+深度图:
+<img src="assets/d2.png">
+
+*注: 更多视角(主视角/腕部视角请自行参考采集路径)*
+
+
+## 第四章: 模型训练
+
+TODO
