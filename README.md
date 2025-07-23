@@ -32,10 +32,22 @@ cd NC-EXP
 
 conda create -n rlbench python=3.10
 conda activate rlbench
-pip install -r requirements.txt
+pip install -r requirement.txt
+
 ```
 
-3. 测试是否环境正常
+3. 添加版本适配
+
+```bash
+# 编译cffi
+python -m cffi_build.cffi_build
+
+# 添加EDU版兼容
+vim ${HOME}/CoppeliaSim/system/usrset.txt
+# 最后一行添加 allowOldEduRelease=7501
+```
+
+4. 测试是否环境正常
 
 ```bash
 export PYTHONPATH=$(pwd):$PYTHONPATH

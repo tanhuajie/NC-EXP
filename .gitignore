@@ -117,3 +117,4 @@ dmypy.json
 .pyre/
 data_save/
 index.html
+.vscode

@@ -7,6 +7,5 @@ numpy==2.2.6
 pillow==11.3.0
 pycparser==2.22
 pyquaternion==0.9.9
-rlbench==1.2.0
 scipy==1.15.3
 typing_extensions==4.14.1
