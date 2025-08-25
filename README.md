@@ -2,6 +2,25 @@
 
 本教程基于Rlbench和V-Rep, 学习仿真环境下的具身智能任务设计--任务验证--数据采集--模型训练完整流程.
 
+## 注意: 由于云电脑已经提前安装好环境，因此运行完以下命令后，可以直接跳过第零章 !!!
+
+```bash
+# 激活Conda环境
+sudo su
+source /home/thj/miniconda3/etc/profile.d/conda.sh
+conda activate rlbench
+
+# 设置环境变量
+export COPPELIASIM_ROOT=/home/thj/CoppeliaSim
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$COPPELIASIM_ROOT
+export QT_QPA_PLATFORM_PLUGIN_PATH=$COPPELIASIM_ROOT
+export PYTHONPATH=$(pwd):$PYTHONPATH
+export PATH=$COPPELIASIM_ROOT/bin:$PATH
+
+# 测试当前环境是否正常
+python -m examples.single_task_rl
+```
+
 ## 第零章: 配置环境
 
 *本教材适用于Ubuntu20.04/22.04*
